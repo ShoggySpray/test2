@@ -10,7 +10,6 @@ from threading import Lock
 with open("vectorstore.pkl", "rb") as f:
     vectorstore = pickle.load(f)
 
-
 def set_openai_api_key(api_key: str):
     """Set the api key and return chain.
     If no api_key, then None is returned.
@@ -86,7 +85,6 @@ with block:
         "<center>Powered by <a href='https://github.com/hwchase17/langchain'>LangChain 🦜️🔗</a></center>"
     )
 
-
     state = gr.State()
     agent_state = gr.State()
 
@@ -99,4 +97,6 @@ with block:
         outputs=[agent_state],
     )
 
-block.launch(debug=True)
+# Use environment variable to listen on Railway's provided port.
+if __name__ == "__main__":
+    block.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
